@@ -4,7 +4,7 @@ import commands from './commands'
 import BookmarkModel from './BookmarkModel'
 
 export function activate (context: vscode.ExtensionContext): void {
-  BookmarkModel.registStorer(context.workspaceState)
+  BookmarkModel.registStorer(context.globalState)
   commands.forEach(command => {
     context.subscriptions.push(vscode.commands.registerCommand(command.identifier, command.handler))
   })
