@@ -3,7 +3,7 @@
   "displayName": "Files Bookmark",
   "description": "Files Bookmark",
   "version": "0.0.1",
-  "icon": "./images/icon.png",
+  "icon": "images/icon.png",
   "license": "MIT",
   "publisher": "kanako",
   "repository": {

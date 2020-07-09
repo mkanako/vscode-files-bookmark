@@ -8,4 +8,4 @@ vsc-extension-quickstart.md
 **/.eslintrc.js
 **/*.map
 **/*.ts
-vscode-files-bookmark.code-workspace
+*.code-workspace
