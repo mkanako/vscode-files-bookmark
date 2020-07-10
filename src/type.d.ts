@@ -1,6 +1,6 @@
 interface CommandModule {
   identifier: string;
-  handler: (...args: any[]) => void;// eslint-disable-line @typescript-eslint/no-explicit-any
+  handler: (...args: unknown[]) => void;
 }
 
 interface BookmarkData {

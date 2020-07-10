@@ -2,7 +2,7 @@ import { Memento } from 'vscode'
 
 function autoSave (_target: BookmarkModel, _name: string, descriptor: PropertyDescriptor): PropertyDescriptor {
   const value = descriptor.value
-  descriptor.value = function (this: BookmarkModel, ...args: never): boolean {
+  descriptor.value = function (this: BookmarkModel, ...args: unknown[]): boolean {
     const ret = value.apply(this, args)
     if (ret === true) {
       this.save()
