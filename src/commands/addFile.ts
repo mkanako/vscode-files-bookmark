@@ -11,7 +11,7 @@ export default {
       if (groups.length > 1) {
         const selected = await window.showQuickPick(
           groups,
-          { placeHolder: 'select a group ...' },
+          { placeHolder: 'Select a group ...' },
         )
         if (selected) {
           BookmarkModel.add(path, selected)

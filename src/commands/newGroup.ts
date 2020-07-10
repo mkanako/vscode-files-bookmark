@@ -5,7 +5,7 @@ export default {
   identifier: 'newGroup',
   async handler () {
     const name = await window.showInputBox({
-      placeHolder: 'enter a new group name ...',
+      placeHolder: 'Enter a new group name ...',
     })
     if (name) {
       BookmarkModel.addGroup(name)
