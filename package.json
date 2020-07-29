@@ -48,7 +48,7 @@
       {
         "command": "files-bookmark.addFile",
         "title": "Files Bookmark: Add Current File To Bookmark",
-        "icon": "$(add)"
+        "icon": "$(new-file)"
       },
       {
         "command": "files-bookmark.deleteFile",
@@ -63,12 +63,12 @@
       {
         "command": "files-bookmark.renameGroup",
         "title": "Rename Group",
-        "icon": "$(symbol-parameter)"
+        "icon": "$(diff-renamed)"
       },
       {
         "command": "files-bookmark.newGroup",
         "title": "New Group",
-        "icon": "$(new-folder)"
+        "icon": "$(add)"
       },
       {
         "command": "files-bookmark.refresh",
@@ -77,7 +77,8 @@
       },
       {
         "command": "files-bookmark.openFile",
-        "title": "open file"
+        "title": "open file",
+        "icon": "$(chevron-right)"
       }
     ],
     "menus": {
@@ -117,32 +118,31 @@
           "command": "files-bookmark.newGroup",
           "when": "view == FilesBookmarkExplorer",
           "group": "navigation@2"
-        },
-        {
-          "command": "files-bookmark.addFile",
-          "when": "view == FilesBookmarkExplorer",
-          "group": "navigation@3"
         }
       ],
       "view/item/context": [
         {
-          "command": "files-bookmark.deleteFile",
-          "when": "view == FilesBookmarkExplorer && viewItem == child",
-          "group": "inline"
-        },
-        {
-          "command": "files-bookmark.renameGroup",
+          "command": "files-bookmark.addFile",
           "when": "view == FilesBookmarkExplorer && viewItem == parent",
           "group": "inline@1"
         },
         {
+          "command": "files-bookmark.renameGroup",
+          "when": "view == FilesBookmarkExplorer && viewItem == parent"
+        },
+        {
           "command": "files-bookmark.deleteGroup",
-          "when": "view == FilesBookmarkExplorer && viewItem == parent",
+          "when": "view == FilesBookmarkExplorer && viewItem == parent"
+        },
+        {
+          "command": "files-bookmark.deleteFile",
+          "when": "view == FilesBookmarkExplorer && viewItem == child",
           "group": "inline@2"
         },
         {
           "command": "files-bookmark.openFile",
-          "when": "view == FilesBookmarkExplorer && viewItem == child"
+          "when": "view == FilesBookmarkExplorer && viewItem == child",
+          "group": "inline@1"
         }
       ]
     }
