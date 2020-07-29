@@ -13,12 +13,6 @@
       "ES2019"
     ],
     "strict": true,
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitThis": true,
     "experimentalDecorators": true
   },
   "exclude": [

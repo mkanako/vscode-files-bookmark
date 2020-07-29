@@ -1,6 +1,6 @@
 import { Memento } from 'vscode'
 
-function autoSave (_target: BookmarkModel, _name: string, descriptor: PropertyDescriptor): PropertyDescriptor {
+function autoSave (target: BookmarkModel, name: string, descriptor: PropertyDescriptor): PropertyDescriptor {
   const value = descriptor.value
   descriptor.value = function (this: BookmarkModel, ...args: unknown[]): boolean {
     const ret = value.apply(this, args)
@@ -17,14 +17,14 @@ class BookmarkModel {
   static storer: Memento
 
   private data: BookmarkData = {}
-  private subscribers: Function[] = []
+  private subscribers: (() => void)[] = []
 
   registStorer (s: Memento): void {
     this.constructor.storer = s
     this.loadData()
   }
 
-  subscribe (fn: Function): void {
+  subscribe (fn: () => void): void {
     this.subscribers.push(fn)
   }
 

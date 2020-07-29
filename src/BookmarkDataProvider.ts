@@ -2,7 +2,6 @@ import {
   TreeItem,
   EventEmitter,
   Event,
-  ThemeIcon,
   Uri,
   TreeDataProvider,
   TreeItemCollapsibleState,
@@ -14,7 +13,6 @@ import BookmarkModel from './BookmarkModel'
 class BookmarkGroup extends TreeItem {
   constructor (label: string) {
     super(label, TreeItemCollapsibleState.Expanded)
-    this.iconPath = ThemeIcon.Folder
     this.contextValue = 'parent'
   }
 }
