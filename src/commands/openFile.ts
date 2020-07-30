@@ -1,15 +1,16 @@
-import { workspace, window, commands } from 'vscode'
+import { workspace, window, Uri } from 'vscode'
 
 export default {
   identifier: 'openFile',
   async handler (args: string | Record<string, 'path'>) {
     try {
       const path = typeof args === 'string' ? args : args.path
-      if (path.endsWith('Application Support/Code/User/settings.json')) {
-        await commands.executeCommand('workbench.action.openSettingsJson')
-        return
+      let document
+      if (path.startsWith('vscode-userdata:')) {
+        document = await workspace.openTextDocument(Uri.parse(path))
+      } else {
+        document = await workspace.openTextDocument(path)
       }
-      const document = await workspace.openTextDocument(path)
       if (document) {
         await window.showTextDocument(document, {
           preview: typeof args === 'string',
