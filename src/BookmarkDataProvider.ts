@@ -28,7 +28,7 @@ class BookmarkItem extends TreeItem {
     this.group = group
     this.command = {
       command: 'files-bookmark.openFile',
-      title: 'openFile',
+      title: 'Open File',
       arguments: [path],
     }
     this.tooltip = `open file "${path}"`
