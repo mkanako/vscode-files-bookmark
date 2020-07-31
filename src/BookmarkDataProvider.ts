@@ -6,6 +6,7 @@ import {
   TreeDataProvider,
   TreeItemCollapsibleState,
   ProviderResult,
+  ThemeIcon,
 } from 'vscode'
 import { basename } from 'path'
 import BookmarkModel from './BookmarkModel'
@@ -13,7 +14,7 @@ import BookmarkModel from './BookmarkModel'
 class BookmarkGroup extends TreeItem {
   constructor (label: string) {
     super(label, TreeItemCollapsibleState.Expanded)
-    this.contextValue = 'parent'
+    this.contextValue = 'group'
   }
 }
 
@@ -26,14 +27,26 @@ class BookmarkItem extends TreeItem {
     this.id = `${group}:${path}`
     this.path = path
     this.group = group
-    this.command = {
-      command: 'files-bookmark.openFile',
-      title: 'Open File',
-      arguments: [path],
+    if (path.startsWith('folder:')) {
+      const realPath = path.replace(/^folder:/, '')
+      this.command = {
+        command: 'files-bookmark.openFolder',
+        title: 'Open Folder',
+        arguments: [realPath],
+      }
+      this.tooltip = `Open Folder "${realPath}"`
+      this.iconPath = ThemeIcon.Folder
+      this.contextValue = 'folder '
+    } else {
+      this.command = {
+        command: 'files-bookmark.openFile',
+        title: 'Open File',
+        arguments: [path],
+      }
+      this.tooltip = `Open File "${path}"`
+      this.resourceUri = Uri.file(path)
+      this.contextValue = 'file'
     }
-    this.tooltip = `open file "${path}"`
-    this.resourceUri = Uri.file(path)
-    this.contextValue = 'child'
   }
 }
 
