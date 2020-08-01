@@ -55,13 +55,13 @@
         "icon": "$(new-file)"
       },
       {
-        "command": "files-bookmark.addFolder",
-        "title": "Add Folder To Bookmark",
-        "icon": "$(new-folder)"
+        "command": "files-bookmark.selectAdd",
+        "title": "Select and Add",
+        "icon": "$(diff-added)"
       },
       {
         "command": "files-bookmark.deleteItem",
-        "title": "Delete Item",
+        "title": "Delete",
         "icon": "$(close)"
       },
       {
@@ -96,14 +96,14 @@
       },
       {
         "command": "files-bookmark.refreshFolder",
-        "title": "Refresh Folder",
+        "title": "Refresh",
         "icon": "$(refresh)"
       }
     ],
     "menus": {
       "commandPalette": [
         {
-          "command": "files-bookmark.addFolder",
+          "command": "files-bookmark.selectAdd",
           "when": "false"
         },
         {
@@ -163,7 +163,7 @@
           "group": "inline@1"
         },
         {
-          "command": "files-bookmark.addFolder",
+          "command": "files-bookmark.selectAdd",
           "when": "view == FilesBookmarkExplorer && viewItem == group",
           "group": "inline@2"
         },

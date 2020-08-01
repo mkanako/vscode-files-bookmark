@@ -5,7 +5,7 @@ import newGroup from './newGroup'
 import deleteGroup from './deleteGroup'
 import renameGroup from './renameGroup'
 import openFile from './openFile'
-import addFolder from './addFolder'
+import selectAdd from './selectAdd'
 import FilesExplorer from '../FilesExplorer'
 
 const commands: CommandModule[] = [
@@ -16,7 +16,7 @@ const commands: CommandModule[] = [
   deleteGroup,
   renameGroup,
   openFile,
-  addFolder,
+  selectAdd,
   ...FilesExplorer.commands,
 ]
 
