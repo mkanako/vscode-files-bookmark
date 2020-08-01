@@ -32,7 +32,7 @@ class BookmarkItem extends TreeItem {
       this.command = {
         command: 'files-bookmark.openFolder',
         title: 'Open Folder',
-        arguments: [realPath],
+        arguments: [realPath, this.label],
       }
       this.tooltip = `Open Folder "${realPath}"`
       this.iconPath = ThemeIcon.Folder

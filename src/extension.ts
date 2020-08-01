@@ -10,7 +10,7 @@ export function activate (context: vscode.ExtensionContext): void {
     context.subscriptions.push(vscode.commands.registerCommand(command.identifier, command.handler))
   })
   context.subscriptions.push(vscode.window.registerTreeDataProvider('FilesBookmarkExplorer', new BookmarkDataProvider()))
-  context.subscriptions.push(vscode.window.registerTreeDataProvider('FilesExplorer', FilesExplorer.DataProvider))
+  context.subscriptions.push(FilesExplorer.treeview)
 }
 
 export function deactivate (): void { }
