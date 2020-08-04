@@ -8,3 +8,4 @@ vsc-extension-quickstart.md
 **/.eslintrc.js
 **/*.map
 **/*.ts
+.eslintignore
