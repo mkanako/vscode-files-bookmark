@@ -1,41 +1,22 @@
-import FilesTreeDataProvider from './FilesTreeDataProvider'
-import { TreeView, window } from 'vscode'
+import { FilesTreeDataProvider } from './FilesTreeDataProvider'
+import { TreeView } from 'vscode'
+import { Explorer } from './Explorer'
 
-const commands: string[] = []
-
-function asCommand (target: FilesExplorer, name: string, descriptor: PropertyDescriptor): PropertyDescriptor {
-  commands.push(name)
-  return descriptor
-}
-
-class FilesExplorer {
-  DataProvider: FilesTreeDataProvider
-  commands: CommandModule[]
-  treeview: TreeView<unknown>
-
-  constructor () {
-    this.DataProvider = new FilesTreeDataProvider()
-    this.treeview = window.createTreeView('FilesExplorer', { treeDataProvider: this.DataProvider })
-    this.commands = commands.map(name => ({
-      identifier: name,
-      handler: (this[name as keyof FilesExplorer] as CommandModule['handler']).bind(this),
-    } as CommandModule))
+export class FilesExplorer extends Explorer {
+  constructor (private treeView: TreeView<unknown>, private dataProvider: FilesTreeDataProvider) {
+    super()
   }
 
-  @asCommand
-  openFolder (path: string, name: string) {
+  openFolder (path: string, name: string): void {
     if (path) {
-      this.DataProvider.setRoot(path)
+      this.dataProvider.setRoot(path)
       if (name) {
-        this.treeview.title = name
+        this.treeView.title = name
       }
     }
   }
 
-  @asCommand
-  refreshFolder () {
-    this.DataProvider.refresh()
+  refreshFolder (): void {
+    this.dataProvider.refresh()
   }
 }
-
-export default new FilesExplorer()

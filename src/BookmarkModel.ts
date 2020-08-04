@@ -1,5 +1,11 @@
 import { Memento } from 'vscode'
 
+export interface BookmarkData {
+  [propName: string]: string[];
+}
+
+let instance: BookmarkModel
+
 function autoSave (target: BookmarkModel, name: string, descriptor: PropertyDescriptor): PropertyDescriptor {
   const value = descriptor.value
   descriptor.value = function (this: BookmarkModel, ...args: unknown[]): boolean {
@@ -12,16 +18,15 @@ function autoSave (target: BookmarkModel, name: string, descriptor: PropertyDesc
   return descriptor
 }
 
-class BookmarkModel {
-  ['constructor']: typeof BookmarkModel
-  static storer: Memento
-
+export class BookmarkModel {
   private data: BookmarkData = {}
   private subscribers: (() => void)[] = []
 
-  registStorer (s: Memento): void {
-    this.constructor.storer = s
+  constructor (private storer: Memento) {
     this.loadData()
+    if (!instance) {
+      instance = this
+    }
   }
 
   subscribe (fn: () => void): void {
@@ -29,7 +34,7 @@ class BookmarkModel {
   }
 
   loadData (): void {
-    this.data = JSON.parse(this.constructor.storer.get('data', '{"default":[]}'))
+    this.data = JSON.parse(this.storer.get('data', '{"default":[]}'))
   }
 
   get (): BookmarkData {
@@ -97,7 +102,7 @@ class BookmarkModel {
   }
 
   save (): void {
-    this.constructor.storer.update('data', JSON.stringify(this.data))
+    this.storer.update('data', JSON.stringify(this.data))
     this.notify()
   }
 
@@ -106,4 +111,11 @@ class BookmarkModel {
   }
 }
 
-export default new BookmarkModel()
+export default new Proxy({}, {
+  get (target, key) {
+    if (!instance) {
+      return undefined
+    }
+    return instance[key as keyof BookmarkModel]
+  },
+}) as BookmarkModel

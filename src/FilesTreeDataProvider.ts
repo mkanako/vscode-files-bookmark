@@ -39,7 +39,7 @@ function readdir (path: string): FileItem[] {
     })
 }
 
-class FilesTreeDataProvider implements TreeDataProvider<FileItem> {
+export class FilesTreeDataProvider implements TreeDataProvider<FileItem> {
   private _onDidChangeTreeData: EventEmitter<FileItem | undefined | void> = new EventEmitter()
   readonly onDidChangeTreeData: Event<FileItem | undefined | void> = this._onDidChangeTreeData.event
   private root: string
@@ -48,7 +48,7 @@ class FilesTreeDataProvider implements TreeDataProvider<FileItem> {
     this.root = ''
   }
 
-  setRoot (path:string):void {
+  setRoot (path: string): void {
     if (this.root !== path) {
       this.root = path
       this.refresh()
@@ -89,5 +89,3 @@ class FilesTreeDataProvider implements TreeDataProvider<FileItem> {
     return treeItem
   }
 }
-
-export default FilesTreeDataProvider

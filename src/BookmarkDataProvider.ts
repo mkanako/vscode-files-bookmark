@@ -9,7 +9,7 @@ import {
   ThemeIcon,
 } from 'vscode'
 import { basename } from 'path'
-import BookmarkModel from './BookmarkModel'
+import { BookmarkModel, BookmarkData } from './BookmarkModel'
 
 class BookmarkGroup extends TreeItem {
   constructor (label: string) {
@@ -50,18 +50,18 @@ class BookmarkItem extends TreeItem {
   }
 }
 
-export default class BookmarkDataProvider implements TreeDataProvider<TreeItem> {
+export class BookmarkDataProvider implements TreeDataProvider<TreeItem> {
   private _onDidChangeTreeData: EventEmitter<TreeItem | undefined | void> = new EventEmitter()
   readonly onDidChangeTreeData: Event<TreeItem | undefined | void> = this._onDidChangeTreeData.event
   private data: BookmarkData
 
-  constructor () {
-    this.data = BookmarkModel.get()
-    BookmarkModel.subscribe(this.refresh.bind(this))
+  constructor (private model: BookmarkModel) {
+    this.data = this.model.get()
+    this.model.subscribe(this.refresh.bind(this))
   }
 
   refresh (): void {
-    this.data = BookmarkModel.get()
+    this.data = this.model.get()
     this._onDidChangeTreeData.fire()
   }
 

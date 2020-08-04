@@ -1,16 +1,28 @@
 import * as vscode from 'vscode'
-import BookmarkDataProvider from './BookmarkDataProvider'
-import commands from './commands'
-import BookmarkModel from './BookmarkModel'
-import FilesExplorer from './FilesExplorer'
+import { BookmarkDataProvider } from './BookmarkDataProvider'
+import { BookmarkModel } from './BookmarkModel'
+import { FilesTreeDataProvider } from './FilesTreeDataProvider'
+import { FilesExplorer } from './FilesExplorer'
+import { FilesBookmarkExplorer } from './FilesBookmarkExplorer'
 
 export function activate (context: vscode.ExtensionContext): void {
-  BookmarkModel.registStorer(context.globalState)
-  commands.forEach(command => {
-    context.subscriptions.push(vscode.commands.registerCommand(command.identifier, command.handler))
-  })
-  context.subscriptions.push(vscode.window.registerTreeDataProvider('FilesBookmarkExplorer', new BookmarkDataProvider()))
-  context.subscriptions.push(FilesExplorer.treeview)
+  const bookmarkModel = new BookmarkModel(context.globalState)
+
+  context.subscriptions.push(vscode.window.registerTreeDataProvider('FilesBookmarkExplorer', new BookmarkDataProvider(bookmarkModel)))
+
+  const filesTreeDataProvider = new FilesTreeDataProvider()
+
+  const fileTreeView = vscode.window.createTreeView('FilesExplorer', { treeDataProvider: filesTreeDataProvider })
+
+  context.subscriptions.push(fileTreeView)
+
+  const filesBookmarkExplorer = new FilesBookmarkExplorer()
+
+  context.subscriptions.push(...filesBookmarkExplorer.registerCommand())
+
+  const filesExplorer = new FilesExplorer(fileTreeView, filesTreeDataProvider)
+
+  context.subscriptions.push(...filesExplorer.registerCommand())
 }
 
 export function deactivate (): void { }
